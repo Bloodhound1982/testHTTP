@@ -2,7 +2,10 @@ extends layout
 
 block content
   h1 Hello
-  p Welcome to #{title}
-  input(type='text', placeholder='Enter brand-name')
+  p In the field below you can input name of programming language or number from 1 to 6.
+  input(type='text',
+        placeholder='Enter data',
+        name='language',
+        id='lang_name')
   button#btn send
 
