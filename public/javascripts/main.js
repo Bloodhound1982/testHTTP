@@ -3,7 +3,12 @@
  */
 (function(){
     var langName = document.querySelector('#lang_name'),
-        btn = document.querySelector('#btn');
+        btn = document.querySelector('#btn'),
+        image = document.createElement('img'),
+        text = document.createElement('p');
+    text.classList.add('text');
+    image.classList.add('lang_logo');
+
 
     btn.addEventListener('click', function () {
         var xhr = new XMLHttpRequest();
@@ -16,7 +21,12 @@
         }
         xhr.open('GET', '/users?' + params, true);
         xhr.onreadystatechange = function () {
-            console.log(xhr.responseText);
+            var resObj = JSON.parse(xhr.responseText);
+            image.src = resObj.imageUrl;
+            text.innerHTML = resObj.description;
+            document.body.appendChild(image);
+            document.body.appendChild(text);
+
         };
         xhr.send();
     })

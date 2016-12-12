@@ -9,14 +9,13 @@ router.get('/', function (req, res, next) {
     var result, objToRequest;
 
     if (req.query.id) {
-
         for (var i = 0; i < jsonArray.length; i++) {
             if (req.query.id === jsonArray[i].id) {
                 result = jsonArray[i];
                 break;
             }
         }
-        objToRequest = !result ? {desc: 'Error input!'}
+        objToRequest = !result ? {name: 'Error input!'}
             : result;
         res.send(JSON.stringify(objToRequest));
     } else {
@@ -26,11 +25,10 @@ router.get('/', function (req, res, next) {
                 break;
             }
         }
-        objToRequest = !result ? {desc: 'Error input!'}
+        objToRequest = !result ? {name: 'Error input!'}
             : result;
         res.send(JSON.stringify(objToRequest));
     }
-
 });
 
 module.exports = router;
