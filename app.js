@@ -4,15 +4,10 @@ var express = require('express'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-    db = mongoose.connect('mongodb://localhost/data'),
-    Document = require('./models.js').Document(db),
-
     index = require('./routes/index'),
     users = require('./routes/users'),
-    test = require('./routes/test');
-
-var app = express();
+    test = require('./routes/test'),
+    app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

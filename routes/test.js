@@ -3,31 +3,25 @@
  */
 var express = require('express'),
     router = express.Router(),
-    fs = require('fs'),                             //module that working with files
-    content = fs.readFileSync('source/data.json'),  //read our json-file
-    jsonArray = JSON.parse(content);                //parse json to object
+    LanguagesModel = require('../lib/db/index').LanguagesModel;
 
 router.get('/', function (req, res, next) {
-    var result, objToRequest;
+    var objToRequest;
 
     if (req.query.id) {
-        for (var i = 0; i < jsonArray.length; i++) {
-            if (req.query.id === jsonArray[i].id) {
-                result = jsonArray[i];
-                break;
-            }
-        }
-        objToRequest = !result ? {description: 'Error input!'} : result;
-        res.send(JSON.stringify(objToRequest));
+        LanguagesModel.findOne({id: req.query.id})
+            .lean().exec(function (err, lang) {
+            if (err) __handleError(err);
+            objToRequest = !lang ? {description: 'Error input!'} : JSON.stringify(lang);
+            return res.send(objToRequest);
+        });
     } else {
-        for (var i = 0; i < jsonArray.length; i++) {
-            if (req.query.name.toLowerCase() === jsonArray[i].name.toLowerCase()) {
-                result = jsonArray[i];
-                break;
-            }
-        }
-        objToRequest = !result ? {description: 'Error input!'} : result;
-        res.send(JSON.stringify(objToRequest));
+        LanguagesModel.findOne({name: new RegExp('^' +req.query.name + '$', 'i')})
+            .lean().exec(function (err, lang) {
+            if (err) __handleError(err);
+            objToRequest = !lang ? {description: 'Error input!'} : JSON.stringify(lang);
+            return res.send(objToRequest);
+        });
     }
 });
 
