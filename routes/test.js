@@ -1,12 +1,10 @@
-/**
- * Created by alex on 12.12.16.
- */
-var express = require('express'),
+'use strict';
+let express = require('express'),
     router = express.Router(),
     LanguagesModel = require('../lib/db/index').LanguagesModel;
 
 router.get('/', function (req, res, next) {
-    var objToRequest;
+    let objToRequest;
 
     if (req.query.id) {
         LanguagesModel.findOne({id: req.query.id})

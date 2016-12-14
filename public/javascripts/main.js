@@ -1,8 +1,5 @@
-/**
- * Created by alex on 11.12.16.
- */
-(function(){
-    var langName = document.querySelector('#lang_name'),
+;(function(){
+    let langName = document.querySelector('#lang_name'),
         btn = document.querySelector('#btn'),
         image = document.createElement('img'),
         text = document.createElement('p'),
@@ -13,9 +10,9 @@
     image.classList.add('lang_logo');
 
     btn.addEventListener('click', function () {
-        var xhr = new XMLHttpRequest();
-        var data = langName.value;
-        var params;
+        let xhr = new XMLHttpRequest();
+        let data = langName.value;
+        let params;
         if (regExp.test(data)) {    //if data is number send 'id'
             params = 'id=' + data;
         } else {                    //if string - send 'name'
@@ -26,12 +23,13 @@
         // receive request from server, parse JSON to object, add info to elements
         // add elements to the DOM
         xhr.onreadystatechange = function () {
-            var resObj = JSON.parse(xhr.responseText);
-            image.src = !resObj.imageUrl ? 'images/error.svg'
-                                         : resObj.imageUrl;
-            text.innerHTML = resObj.description;
-            document.body.appendChild(image);
-            document.body.appendChild(text);
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let resObj = JSON.parse(xhr.responseText);
+                image.src = !resObj.imageUrl ? 'images/error.svg' : resObj.imageUrl;
+                text.innerHTML = resObj.description;
+                document.body.appendChild(image);
+                document.body.appendChild(text);
+            }
         };
         xhr.send();
     })
