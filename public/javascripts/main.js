@@ -5,6 +5,14 @@
         text = document.createElement('p'),
         regExp = new RegExp(/^\d+$/); //regexp for checking input data (only numbers)
 
+    let socket = io();
+
+    //test timeout for socket.io
+    setTimeout(function () {
+        socket.emit('test', 'dsj;fasdkf;ja');
+    }, 2000);
+
+
     //add class for image and text
     text.classList.add('text');
     image.classList.add('lang_logo');
