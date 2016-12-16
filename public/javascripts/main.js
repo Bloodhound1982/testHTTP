@@ -33,8 +33,13 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 let resObj = JSON.parse(xhr.responseText);
-                image.src = !resObj.imageUrl ? 'images/error.svg' : resObj.imageUrl;
-                text.innerHTML = resObj.description;
+                if (resObj.status === 'error') {
+                    image.src = resObj.imageUrl;
+                    text.innerHTML = resObj.description;
+                } else {
+                    image.src = resObj.lang.imageUrl;
+                    text.innerHTML = resObj.lang.description;
+                }
                 document.body.appendChild(image);
                 document.body.appendChild(text);
             }
