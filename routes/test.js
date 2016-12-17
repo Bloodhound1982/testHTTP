@@ -4,7 +4,6 @@ const router = express.Router();
 let LanguagesModel = require('lib/db').LanguagesModel;
 
 router.get('/', function (req, res, next) {
-    console.log('from test');
     res.render('test');
 });
 

@@ -3,11 +3,27 @@ extends layout
 block content
     .container
         .row
-            alert.alert-success(role='alert')
-                h4 Chat starts here!
+            .col-md-12
+                alert.alert-success(role='alert')
+                    h4 Chat starts here!
     .container
         .row
             .col-md-4
-                block left
+                .row
+                    .col-lg-12
+                        ul.list-group
+                            li.list-group-item.list-group-item-info List of active users
+                            li.list-group-item Lorem
+                            li.list-group-item Lorem
+                            li.list-group-item Lorem
+
             .col-md-8
-                block main
+                .row
+                    .col-lg-12#chat_window
+
+                .row
+                    .form-group.col-sm-12
+                        .row
+                            textarea.col-sm-12.form-contol.mt-2#message(rows='4')
+                            button.col-sm-3#send_btn.btn.btn-primary.mt-2(type='submit') Send message!
+
