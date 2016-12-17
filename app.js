@@ -1,13 +1,15 @@
 'use strict';
-let express = require('express'),
-    path = require('path'),
+const express = require('express');
+
+let path = require('path'),
     favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    index = require('./routes/index'),
-    users = require('./routes/users'),
-    test = require('./routes/test'),
+    index = require('routes/index'),
+    users = require('routes/users'),
+    test = require('routes/test'),
+    chat = require('routes/chat'),
     app = express();
 
 // view engine setup
@@ -31,10 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/test', test);
+app.use('/chat', chat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

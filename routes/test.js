@@ -1,7 +1,7 @@
 'use strict';
-let express = require('express'),
-    router = express.Router(),
-    LanguagesModel = require('../lib/db/index').LanguagesModel;
+const express = require('express');
+const router = express.Router();
+let LanguagesModel = require('lib/db').LanguagesModel;
 
 router.get('/', function (req, res, next) {
     let objToResponse;

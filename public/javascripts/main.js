@@ -18,6 +18,7 @@
     image.classList.add('lang_logo');
 
     btn.addEventListener('click', function () {
+        console.log('catch');
         let xhr = new XMLHttpRequest();
         let data = langName.value;
         let params;
