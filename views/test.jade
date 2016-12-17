@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    .container
+        .row
+            alert.alert-success(role='alert')
+                h4 Hello
+                p In the field below you can input name of programming language or number from 1 to 6.
+        .row
+            .col-lg-4
+                .input-group
+                    input#lang_name.form-control(type='text',
+                    placeholder='Enter data...')
+                    span.input-group-btn
+                        button#btn.btn.btn-secondary(type='button') Send!
+            .col-lg-8
+        .row

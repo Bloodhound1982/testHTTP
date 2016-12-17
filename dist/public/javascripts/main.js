@@ -1,17 +1,18 @@
-;(function(){
-    let langName = document.querySelector('#lang_name'),
+'use strict';
+
+;(function () {
+    var langName = document.querySelector('#lang_name'),
         btn = document.querySelector('#btn'),
         image = document.createElement('img'),
         text = document.createElement('p'),
         regExp = new RegExp(/^\d+$/); //regexp for checking input data (only numbers)
 
-    let socket = io();
+    var socket = io();
 
     //test timeout for socket.io
     setTimeout(function () {
         socket.emit('test', 'dsj;fasdkf;ja');
     }, 2000);
-
 
     //add class for image and text
     text.classList.add('text');
@@ -19,12 +20,14 @@
 
     btn.addEventListener('click', function () {
         console.log('catch');
-        let xhr = new XMLHttpRequest();
-        let data = langName.value;
-        let params;
-        if (regExp.test(data)) {    //if data is number send 'id'
+        var xhr = new XMLHttpRequest();
+        var data = langName.value;
+        var params = void 0;
+        if (regExp.test(data)) {
+            //if data is number send 'id'
             params = 'id=' + data;
-        } else {                    //if string - send 'name'
+        } else {
+            //if string - send 'name'
             params = 'name=' + data;
         }
         xhr.open('GET', '/test/query?' + params, true);
@@ -33,7 +36,7 @@
         // add elements to the DOM
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                let resObj = JSON.parse(xhr.responseText);
+                var resObj = JSON.parse(xhr.responseText);
                 if (resObj.status === 'error') {
                     image.src = resObj.imageUrl;
                     text.innerHTML = resObj.description;
@@ -46,5 +49,6 @@
             }
         };
         xhr.send();
-    })
+    });
 })();
+//# sourceMappingURL=main.js.map
