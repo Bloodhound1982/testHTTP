@@ -1,5 +1,5 @@
 'use strict';
-let sockets = require('lib/sockets');
+let sockets = require('');
 
 let chat = [];
 

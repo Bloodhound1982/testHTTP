@@ -3,27 +3,82 @@ extends layout
 block content
     .container
         .row
-            .col-md-12
-                alert.alert-success(role='alert')
-                    h4 Chat starts here!
-    .container
+            .col-md-3.col-sm-4.mb-2
+                .btn.btn-primary.btn-modal(data-toggle='modal',
+                                             data-target='.bd-create-modal-sm') Create room
+                .modal.fade.bd-create-modal-sm(tabindex='-1',
+                                                role='dialog',
+                                                aria-labelledby='myModalLabel',
+                                                aria-hidden='true')
+                    .modal-dialog.modal-sm
+                        .modal-content
+                            .modal-header
+                                button.close(type='button',
+                                             data-dismiss='modal',
+                                             aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                                h4.modal-title Creating room
+                            .modal-body
+                                form
+                                    .form-group
+                                        label.form-control-label(for='room_name') Room name:
+                                        input.form-control#room_name(type='text')
+                                    .form-group
+                                        label.form-control-label(for='user_name') Nickname:
+                                        input.form-control#user_name(type='text')
+                            .modal-footer
+                                button.btn.btn-primary#create_room Create room
+            .col-md-3.col-sm-4
+                .btn.btn-primary.btn-modal(data-toggle='modal',
+                                           data-target='.bd-join-modal-sm') Join to room
+                .modal.fade.bd-join-modal-sm(tabindex='-1',
+                                                role='dialog',
+                                                aria-labelledby='myModalLabel',
+                                                aria-hidden='true')
+                    .modal-dialog.modal-sm
+                        .modal-content
+                            .modal-header
+                                button.close(type='button',
+                                             data-dismiss='modal',
+                                             aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                                h4.modal-title Join to the room
+                            .modal-body
+                                form
+                                    .form-group
+                                        label.form-control-label(for='join_room_name') Room name:
+                                        input.form-control#join_room_name(type='text')
+                                    .form-group
+                                        label.form-control-label(for='join_user_name') Nickname:
+                                        input.form-control#join_user_name(type='text')
+                            .modal-footer
+                                button.btn.btn-primary#join_room Join
+            .col-md-6.col-sm-4
         .row
-            .col-md-4
+            .col-sm-12
+                .alert#connect(role='alert')
+                    h4
+        .row
+            .col-sm-4
                 .row
-                    .col-lg-12
+                    .col-sm-12
                         ul.list-group
                             li.list-group-item.list-group-item-info List of active users
                             li.list-group-item Lorem
                             li.list-group-item Lorem
                             li.list-group-item Lorem
 
-            .col-md-8
+            .col-sm-8
                 .row
                     .col-lg-12#chat_window
 
                 .row
-                    .form-group.col-sm-12
-                        .row
-                            textarea.col-sm-12.form-contol.mt-2#message(rows='4')
-                            button.col-sm-3#send_btn.btn.btn-primary.mt-2(type='submit') Send message!
-
+                    .col-sm-12
+                        form#message_form
+                            .form-group
+                                .row
+                                    .col-sm-12
+                                        textarea.form-contol.mt-2#message(rows='4', name='message')
+                                    .col-sm-3
+                                        button#send_btn.btn.btn-primary.mt-2(type='button') Send message!
+                                    .col-sm-9
