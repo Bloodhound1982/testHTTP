@@ -19,13 +19,13 @@ block content
                                     span(aria-hidden='true') &times;
                                 h4.modal-title Creating room
                             .modal-body
-                                form
+                                form#create_room_form
                                     .form-group
                                         label.form-control-label(for='room_name') Room name:
-                                        input.form-control#room_name(type='text')
+                                        input.form-control#room_name(type='text', name='room_name')
                                     .form-group
                                         label.form-control-label(for='user_name') Nickname:
-                                        input.form-control#user_name(type='text')
+                                        input.form-control#user_name(type='text', name='user_name')
                             .modal-footer
                                 button.btn.btn-primary#create_room Create room
             .col-md-3.col-sm-4
@@ -44,7 +44,7 @@ block content
                                     span(aria-hidden='true') &times;
                                 h4.modal-title Join to the room
                             .modal-body
-                                form
+                                form#join_room_form
                                     .form-group
                                         label.form-control-label(for='join_room_name') Room name:
                                         input.form-control#join_room_name(type='text')
@@ -55,18 +55,22 @@ block content
                                 button.btn.btn-primary#join_room Join
             .col-md-6.col-sm-4
         .row
+            .col-md-3
+                label Room's name:
+                span.tag.tag-danger#room_label No Room
+            .col-md-3
+                label Nickname:
+                span.tag.tag-success#nick_label No Nickname
+        .row.mt-2
             .col-sm-12
                 .alert#connect(role='alert')
-                    h4
-        .row
+                    h6
+    .row
             .col-sm-4
                 .row
                     .col-sm-12
-                        ul.list-group
+                        ul.list-group#list_users
                             li.list-group-item.list-group-item-info List of active users
-                            li.list-group-item Lorem
-                            li.list-group-item Lorem
-                            li.list-group-item Lorem
 
             .col-sm-8
                 .row

@@ -2,17 +2,33 @@
 
 var chat = require('lib/chat');
 
+var rooms = [],
+    messages = [];
+
 module.exports.up = function (io) {
     io.on('connection', function (socket) {
         console.log('socket is connected!');
-
         socket.emit('testConnect', { connection: true });
 
-        socket.on('new message', function (data) {
+        socket.on('create room', function (data) {
+            socket.join(data.room);
+
+            var room = {
+                roomName: data.room,
+                users: [],
+                messages: []
+            };
+            room.users.push(data.user);
+            rooms.push(room);
+            io.to(room.roomName).emit('add room', data.room);
+            io.to(room.roomName).emit('add client', data.user);
+        });
+
+        /*socket.on('new message', function (data) {
             console.log(data.username);
             console.log(new Date(data.date).getDate());
             console.log(data.text);
-        });
+        });*/
 
         /*
                 let name = false;
