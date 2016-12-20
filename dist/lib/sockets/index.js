@@ -24,6 +24,31 @@ module.exports.up = function (io) {
             io.to(room.roomName).emit('add client', data.user);
         });
 
+        socket.on('try join', function (data) {
+            var isUserNameCorrect = true;
+            var isRoomNameCorrect = false;
+            var roomIndex = void 0;
+            rooms.forEach(function (elem, idx, arr) {
+                if (elem.roomName === data.room) {
+                    socket.join(data.room);
+                    isRoomNameCorrect = true;
+                    roomIndex = idx;
+                }
+                elem.users.forEach(function (el, id, a) {
+                    if (el === data.user) {
+                        isUserNameCorrect = false;
+                    }
+                });
+            });
+            if (isRoomNameCorrect && isUserNameCorrect) {
+                rooms[roomIndex].users.push(data.user);
+                // console.log(`${roomIndex} and ${data.user}`);
+                console.log(rooms[roomIndex].users);
+                socket.emit('after join', rooms[roomIndex]);
+                io.to(data.room).emit('update clients', rooms[roomIndex].users);
+            }
+        });
+
         /*socket.on('new message', function (data) {
             console.log(data.username);
             console.log(new Date(data.date).getDate());
