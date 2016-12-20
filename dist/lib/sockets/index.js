@@ -2,26 +2,30 @@
 
 var chat = require('lib/chat');
 
+var Room = require('lib/chat/Room');
+
 var rooms = [],
-    messages = [];
+    connection = 0;
 
 module.exports.up = function (io) {
     io.on('connection', function (socket) {
-        console.log('socket is connected!');
+        console.log('socket is connected! connection #' + ++connection);
         socket.emit('testConnect', { connection: true });
 
         socket.on('create room', function (data) {
-            socket.join(data.room);
-
-            var room = {
-                roomName: data.room,
-                users: [],
-                messages: []
-            };
-            room.users.push(data.user);
-            rooms.push(room);
-            io.to(room.roomName).emit('add room', data.room);
-            io.to(room.roomName).emit('add client', data.user);
+            var tempArray = rooms.filter(function (elem, idx, arr) {
+                return elem.getName() === data.room;
+            });
+            if (tempArray.length) {
+                socket.emit('error create room', { error: 'Room has already existed!' });
+            } else {
+                socket.join(data.room);
+                var room = new Room(data.room);
+                room.addUser(data.user);
+                rooms.push(room);
+                io.to(room.getName()).emit('add room', room.getName());
+                io.to(room.getName()).emit('add client', room.getUsers()[0]);
+            }
         });
 
         socket.on('try join', function (data) {
@@ -49,11 +53,7 @@ module.exports.up = function (io) {
             }
         });
 
-        /*socket.on('new message', function (data) {
-            console.log(data.username);
-            console.log(new Date(data.date).getDate());
-            console.log(data.text);
-        });*/
+        socket.on('new message', function (data) {});
 
         /*
                 let name = false;

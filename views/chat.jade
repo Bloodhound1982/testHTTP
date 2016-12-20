@@ -23,6 +23,7 @@ block content
                                     .form-group
                                         label.form-control-label(for='room_name') Room name:
                                         input.form-control#room_name(type='text', name='room_name')
+                                        .form-control-feedback
                                     .form-group
                                         label.form-control-label(for='user_name') Nickname:
                                         input.form-control#user_name(type='text', name='user_name')
@@ -56,11 +57,12 @@ block content
             .col-md-6.col-sm-4
         .row
             .col-md-3
-                label Room's name:
-                span.tag.tag-danger#room_label No Room
+                h5 Room's name:
+                    span.tag.tag-danger.ml-1#room_label No Room
             .col-md-3
-                label Nickname:
-                span.tag.tag-success#nick_label No Nickname
+                h5 Nickname:
+                    span.tag.tag-success.ml-1#nick_label No Nickname
+            .col-md-6
         .row.mt-2
             .col-sm-12
                 .alert#connect(role='alert')
