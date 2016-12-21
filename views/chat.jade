@@ -49,9 +49,13 @@ block content
                                     .form-group
                                         label.form-control-label(for='join_room_name') Room name:
                                         input.form-control#join_room_name(type='text', name='room_name')
+                                        .form-control-feedback
+
                                     .form-group
                                         label.form-control-label(for='join_user_name') Nickname:
                                         input.form-control#join_user_name(type='text', name='user_name')
+                                        .form-control-feedback
+
                             .modal-footer
                                 button.btn.btn-primary#join_room Join
             .col-md-6.col-sm-4
@@ -91,3 +95,4 @@ block content
                                     .col-sm-3
                                         button#send_btn.btn.btn-primary.mt-2(type='button') Send message!
                                     .col-sm-9
+    script(src='/javascripts/chat.js')
