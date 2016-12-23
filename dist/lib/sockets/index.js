@@ -3,6 +3,7 @@
 var chat = require('lib/chat');
 
 var Room = require('lib/chat/Room');
+var Message = require('lib/chat/Message');
 
 var rooms = [],
     connection = 0;
@@ -54,7 +55,15 @@ module.exports.up = function (io) {
             }
         });
 
-        socket.on('new message', function (data) {});
+        socket.on('new message', function (data) {
+            var room = rooms.filter(function (elem, idx, arr) {
+                return elem.getName() === data.room;
+            })[0];
+            var message = new Message(data.text);
+            message.setUser(data.username);
+            room.addMessage(message);
+            io.to(data.room).emit('update messages', message);
+        });
 
         /*
                 let name = false;
