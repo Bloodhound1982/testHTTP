@@ -53,6 +53,7 @@ module.exports.up = function (io) {
                 });
                 io.to(data.room).emit('update clients', rooms[roomIndex].getUsers());
                 socket.emit('add old messages', rooms[roomIndex].getMessages());
+                socket.broadcast.to(data.room).emit('join new user', data.user);
             }
         });
 

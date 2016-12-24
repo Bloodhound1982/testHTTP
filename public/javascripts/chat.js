@@ -162,7 +162,6 @@
     });
 
     socket.on('update clients', function (data) {
-        console.log(data);
         listOfUsers.children[1].remove();
         let newSpace = document.createElement('li');
         newSpace.classList.add('list-group-item');
@@ -186,6 +185,24 @@
             addMessage(elem, currentUserName);
             messages.push(data);
         })
+    });
+
+    socket.on('join new user', function (data) {
+        let container = chatWindow.children[0];
+        let row = document.createElement('div'),
+            col = document.createElement('div'),
+            tag = document.createElement('span');
+
+        row.classList.add('row');
+        col.classList.add('col-xs-12');
+        tag.classList.add('tag');
+        tag.classList.add('tag-pill');
+        tag.classList.add('tag-warning');
+        tag.innerText = `"${data.toUpperCase()}" is join to the room`;
+        col.appendChild(tag);
+        row.appendChild(col);
+        container.appendChild(row);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
     });
 
 })();
