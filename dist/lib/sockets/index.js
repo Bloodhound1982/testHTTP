@@ -52,7 +52,7 @@ module.exports.up = function (io) {
                     user: data.user
                 });
                 io.to(data.room).emit('update clients', rooms[roomIndex].getUsers());
-                io.to(data.room).emit('add old messages', rooms[roomIndex].getMessages());
+                socket.emit('add old messages', rooms[roomIndex].getMessages());
             }
         });
 

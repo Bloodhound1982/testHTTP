@@ -1,3 +1,4 @@
+"use strict";
 ;(function () {
     let sendButton = document.querySelector('#send_btn'),
         socket = io(),
@@ -23,7 +24,7 @@
 
     let addUser = function (username, isCurrent) {
         let currentTag = isCurrent ? 'tag-success' : 'tag-info';
-        user = document.createElement('span');
+        let user = document.createElement('span');
         user.classList.add('tag');
         user.classList.add(currentTag);
         user.classList.add('mr-1');
@@ -161,6 +162,7 @@
     });
 
     socket.on('update clients', function (data) {
+        console.log(data);
         listOfUsers.children[1].remove();
         let newSpace = document.createElement('li');
         newSpace.classList.add('list-group-item');
