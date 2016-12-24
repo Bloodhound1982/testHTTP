@@ -52,6 +52,7 @@ module.exports.up = function (io) {
                     user: data.user
                 });
                 io.to(data.room).emit('update clients', rooms[roomIndex].getUsers());
+                io.to(data.room).emit('add old messages', rooms[roomIndex].getMessages());
             }
         });
 
@@ -64,30 +65,6 @@ module.exports.up = function (io) {
             room.addMessage(message);
             io.to(data.room).emit('update messages', message);
         });
-
-        /*
-                let name = false;
-                 socket.emit('messages', chat_parts.getLast());
-                 socket.on('name/set', function(data) {
-                    console.log('set name', name);
-                    name = data;
-                });
-                 socket.on('message', function(data) {
-                    let message = {
-                        name: data.name,
-                        message: data.message
-                    };
-                    console.log(message);
-                    chat.send(message);
-                });*/
     });
-
-    // module.exports.sendAll = function (eventName, data) {
-    //    io.sockets.emit(eventName, data);
-    // };
-    //
-    // module.exports.sendMessageAll = function (eventName, data) {
-    //    sendAll(eventName, data);
-    // }
 };
 //# sourceMappingURL=index.js.map

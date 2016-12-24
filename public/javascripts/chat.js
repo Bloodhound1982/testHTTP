@@ -31,6 +31,21 @@
         listOfUsers.children[1].appendChild(user);
     };
 
+    let sendMessage = function() {
+        let form = new FormData(messageForm);
+        let message = form.get('message');
+        let objMessage = {
+            room: currentRoomName,
+            username: currentUserName,
+            text: message,
+        };
+
+        if (objMessage.text) {
+            socket.emit('new message', objMessage);
+            messageInput.value = '';
+        }
+    };
+
     let changeInput = function (formElement, formGroupNumber, isDanger, text) {
         let classInform = isDanger ? 'has-danger' : 'has-success';
         let formGroup = formElement.children[formGroupNumber];
@@ -64,19 +79,6 @@
         container.appendChild(row);
         chatWindow.scrollTop = chatWindow.scrollHeight;
     };
-
-    socket.on('testConnect', function (data) {
-        let titleClasses = title.classList;
-        if (data.connection) {
-            if (titleClasses.contains('alert-danger')) titleClasses.remove('alert-danger');
-            if (!titleClasses.contains('alert-success')) titleClasses.add('alert-success');
-            title.children[0].innerText = 'Connection is successful!';
-        } else {
-            if (titleClasses.contains('alert-success')) titleClasses.remove('alert-success');
-            if (!titleClasses.contains('alert-danger')) titleClasses.add('alert-danger');
-            title.children[0].innerText = 'Connection is wrong!';
-        }
-    });
 
     if (createRoomBtn) {
         createRoomBtn.addEventListener('click', function () {
@@ -135,18 +137,26 @@
         });
     }
 
-    sendButton.addEventListener('click', function () {
-        let form = new FormData(messageForm);
-        let message = form.get('message');
-        let objMessage = {
-            room: currentRoomName,
-            username: currentUserName,
-            text: message,
-        };
+    messageInput.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            sendMessage();
+        }
+    });
 
-        if (objMessage.text) {
-            socket.emit('new message', objMessage);
-            messageInput.value = '';
+    sendButton.addEventListener('click', function () {
+        sendMessage();
+    });
+
+    socket.on('testConnect', function (data) {
+        let titleClasses = title.classList;
+        if (data.connection) {
+            if (titleClasses.contains('alert-danger')) titleClasses.remove('alert-danger');
+            if (!titleClasses.contains('alert-success')) titleClasses.add('alert-success');
+            title.children[0].innerText = 'Connection is successful!';
+        } else {
+            if (titleClasses.contains('alert-success')) titleClasses.remove('alert-success');
+            if (!titleClasses.contains('alert-danger')) titleClasses.add('alert-danger');
+            title.children[0].innerText = 'Connection is wrong!';
         }
     });
 
@@ -167,6 +177,13 @@
     socket.on('update messages', function (data) {
         addMessage(data, currentUserName);
         messages.push(data);
+    });
+
+    socket.on('add old messages', function (data) {
+        data.forEach(function (elem, idx, arr) {
+            addMessage(elem, currentUserName);
+            messages.push(data);
+        })
     });
 
 })();
